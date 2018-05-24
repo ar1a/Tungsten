@@ -11,7 +11,7 @@ type Recipe {
   equipment: [Equipment!]!
   ingredients: [Ingredient!]!
   name: String!
-  yield: Int @default(value: "0")
+  yield: Int @default(value: "1")
 }
 
 type Timeline {
