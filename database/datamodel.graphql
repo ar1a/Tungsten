@@ -1,0 +1,34 @@
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  name: String!
+  timeline: Timeline! @relation(name: "UserRecipe") 
+}
+
+type Recipe {
+  id: ID! @unique
+  equipment: [Equipment!]!
+  ingredients: [Ingredient!]!
+  name: String!
+  yield: Int @default(value: "0")
+}
+
+type Timeline {
+  id: ID! @unique
+  owner: User! @relation(name: "UserRecipe")
+  recipes: [Recipe!]!
+}
+
+type Equipment {
+  id: ID! @unique
+  name: String!
+  washable: Boolean! @default(value: "true")
+}
+
+type Ingredient {
+  id: ID! @unique
+  name: String!
+  quantity: Float!
+  scale: Float @default(value: "1")
+}

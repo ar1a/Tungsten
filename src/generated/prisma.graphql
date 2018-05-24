@@ -1,0 +1,1351 @@
+# source: http://localhost:4466
+# timestamp: Thu May 24 2018 15:15:56 GMT+1000 (AEST)
+
+type AggregateEquipment {
+  count: Int!
+}
+
+type AggregateIngredient {
+  count: Int!
+}
+
+type AggregateRecipe {
+  count: Int!
+}
+
+type AggregateTimeline {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Equipment implements Node {
+  id: ID!
+  name: String!
+  washable: Boolean!
+}
+
+"""A connection to a list of items."""
+type EquipmentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EquipmentEdge]!
+  aggregate: AggregateEquipment!
+}
+
+input EquipmentCreateInput {
+  name: String!
+  washable: Boolean
+}
+
+input EquipmentCreateManyInput {
+  create: [EquipmentCreateInput!]
+  connect: [EquipmentWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type EquipmentEdge {
+  """The item at the end of the edge."""
+  node: Equipment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EquipmentOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  washable_ASC
+  washable_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EquipmentPreviousValues {
+  id: ID!
+  name: String!
+  washable: Boolean!
+}
+
+type EquipmentSubscriptionPayload {
+  mutation: MutationType!
+  node: Equipment
+  updatedFields: [String!]
+  previousValues: EquipmentPreviousValues
+}
+
+input EquipmentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EquipmentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EquipmentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EquipmentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EquipmentWhereInput
+}
+
+input EquipmentUpdateDataInput {
+  name: String
+  washable: Boolean
+}
+
+input EquipmentUpdateInput {
+  name: String
+  washable: Boolean
+}
+
+input EquipmentUpdateManyInput {
+  create: [EquipmentCreateInput!]
+  connect: [EquipmentWhereUniqueInput!]
+  disconnect: [EquipmentWhereUniqueInput!]
+  delete: [EquipmentWhereUniqueInput!]
+  update: [EquipmentUpdateWithWhereUniqueNestedInput!]
+  upsert: [EquipmentUpsertWithWhereUniqueNestedInput!]
+}
+
+input EquipmentUpdateWithWhereUniqueNestedInput {
+  where: EquipmentWhereUniqueInput!
+  data: EquipmentUpdateDataInput!
+}
+
+input EquipmentUpsertWithWhereUniqueNestedInput {
+  where: EquipmentWhereUniqueInput!
+  update: EquipmentUpdateDataInput!
+  create: EquipmentCreateInput!
+}
+
+input EquipmentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EquipmentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EquipmentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EquipmentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  washable: Boolean
+
+  """All values that are not equal to given value."""
+  washable_not: Boolean
+}
+
+input EquipmentWhereUniqueInput {
+  id: ID
+}
+
+type Ingredient implements Node {
+  id: ID!
+  name: String!
+  quantity: Float!
+  scale: Float
+}
+
+"""A connection to a list of items."""
+type IngredientConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [IngredientEdge]!
+  aggregate: AggregateIngredient!
+}
+
+input IngredientCreateInput {
+  name: String!
+  quantity: Float!
+  scale: Float
+}
+
+input IngredientCreateManyInput {
+  create: [IngredientCreateInput!]
+  connect: [IngredientWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type IngredientEdge {
+  """The item at the end of the edge."""
+  node: Ingredient!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum IngredientOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  quantity_ASC
+  quantity_DESC
+  scale_ASC
+  scale_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type IngredientPreviousValues {
+  id: ID!
+  name: String!
+  quantity: Float!
+  scale: Float
+}
+
+type IngredientSubscriptionPayload {
+  mutation: MutationType!
+  node: Ingredient
+  updatedFields: [String!]
+  previousValues: IngredientPreviousValues
+}
+
+input IngredientSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [IngredientSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [IngredientSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [IngredientSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: IngredientWhereInput
+}
+
+input IngredientUpdateDataInput {
+  name: String
+  quantity: Float
+  scale: Float
+}
+
+input IngredientUpdateInput {
+  name: String
+  quantity: Float
+  scale: Float
+}
+
+input IngredientUpdateManyInput {
+  create: [IngredientCreateInput!]
+  connect: [IngredientWhereUniqueInput!]
+  disconnect: [IngredientWhereUniqueInput!]
+  delete: [IngredientWhereUniqueInput!]
+  update: [IngredientUpdateWithWhereUniqueNestedInput!]
+  upsert: [IngredientUpsertWithWhereUniqueNestedInput!]
+}
+
+input IngredientUpdateWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  data: IngredientUpdateDataInput!
+}
+
+input IngredientUpsertWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  update: IngredientUpdateDataInput!
+  create: IngredientCreateInput!
+}
+
+input IngredientWhereInput {
+  """Logical AND on all given filters."""
+  AND: [IngredientWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [IngredientWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [IngredientWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  quantity: Float
+
+  """All values that are not equal to given value."""
+  quantity_not: Float
+
+  """All values that are contained in given list."""
+  quantity_in: [Float!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Float!]
+
+  """All values less than the given value."""
+  quantity_lt: Float
+
+  """All values less than or equal the given value."""
+  quantity_lte: Float
+
+  """All values greater than the given value."""
+  quantity_gt: Float
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Float
+  scale: Float
+
+  """All values that are not equal to given value."""
+  scale_not: Float
+
+  """All values that are contained in given list."""
+  scale_in: [Float!]
+
+  """All values that are not contained in given list."""
+  scale_not_in: [Float!]
+
+  """All values less than the given value."""
+  scale_lt: Float
+
+  """All values less than or equal the given value."""
+  scale_lte: Float
+
+  """All values greater than the given value."""
+  scale_gt: Float
+
+  """All values greater than or equal the given value."""
+  scale_gte: Float
+}
+
+input IngredientWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createUser(data: UserCreateInput!): User!
+  createRecipe(data: RecipeCreateInput!): Recipe!
+  createTimeline(data: TimelineCreateInput!): Timeline!
+  createEquipment(data: EquipmentCreateInput!): Equipment!
+  createIngredient(data: IngredientCreateInput!): Ingredient!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
+  updateTimeline(data: TimelineUpdateInput!, where: TimelineWhereUniqueInput!): Timeline
+  updateEquipment(data: EquipmentUpdateInput!, where: EquipmentWhereUniqueInput!): Equipment
+  updateIngredient(data: IngredientUpdateInput!, where: IngredientWhereUniqueInput!): Ingredient
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
+  deleteTimeline(where: TimelineWhereUniqueInput!): Timeline
+  deleteEquipment(where: EquipmentWhereUniqueInput!): Equipment
+  deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
+  upsertTimeline(where: TimelineWhereUniqueInput!, create: TimelineCreateInput!, update: TimelineUpdateInput!): Timeline!
+  upsertEquipment(where: EquipmentWhereUniqueInput!, create: EquipmentCreateInput!, update: EquipmentUpdateInput!): Equipment!
+  upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyRecipes(data: RecipeUpdateInput!, where: RecipeWhereInput): BatchPayload!
+  updateManyTimelines(data: TimelineUpdateInput!, where: TimelineWhereInput): BatchPayload!
+  updateManyEquipments(data: EquipmentUpdateInput!, where: EquipmentWhereInput): BatchPayload!
+  updateManyIngredients(data: IngredientUpdateInput!, where: IngredientWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
+  deleteManyTimelines(where: TimelineWhereInput): BatchPayload!
+  deleteManyEquipments(where: EquipmentWhereInput): BatchPayload!
+  deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
+  timelines(where: TimelineWhereInput, orderBy: TimelineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Timeline]!
+  equipments(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Equipment]!
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
+  user(where: UserWhereUniqueInput!): User
+  recipe(where: RecipeWhereUniqueInput!): Recipe
+  timeline(where: TimelineWhereUniqueInput!): Timeline
+  equipment(where: EquipmentWhereUniqueInput!): Equipment
+  ingredient(where: IngredientWhereUniqueInput!): Ingredient
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
+  timelinesConnection(where: TimelineWhereInput, orderBy: TimelineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimelineConnection!
+  equipmentsConnection(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EquipmentConnection!
+  ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Recipe implements Node {
+  id: ID!
+  equipment(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Equipment!]
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient!]
+  name: String!
+  yield: Int
+}
+
+"""A connection to a list of items."""
+type RecipeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RecipeEdge]!
+  aggregate: AggregateRecipe!
+}
+
+input RecipeCreateInput {
+  name: String!
+  yield: Int
+  equipment: EquipmentCreateManyInput
+  ingredients: IngredientCreateManyInput
+}
+
+input RecipeCreateManyInput {
+  create: [RecipeCreateInput!]
+  connect: [RecipeWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type RecipeEdge {
+  """The item at the end of the edge."""
+  node: Recipe!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RecipeOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  yield_ASC
+  yield_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RecipePreviousValues {
+  id: ID!
+  name: String!
+  yield: Int
+}
+
+type RecipeSubscriptionPayload {
+  mutation: MutationType!
+  node: Recipe
+  updatedFields: [String!]
+  previousValues: RecipePreviousValues
+}
+
+input RecipeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RecipeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RecipeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RecipeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RecipeWhereInput
+}
+
+input RecipeUpdateDataInput {
+  name: String
+  yield: Int
+  equipment: EquipmentUpdateManyInput
+  ingredients: IngredientUpdateManyInput
+}
+
+input RecipeUpdateInput {
+  name: String
+  yield: Int
+  equipment: EquipmentUpdateManyInput
+  ingredients: IngredientUpdateManyInput
+}
+
+input RecipeUpdateManyInput {
+  create: [RecipeCreateInput!]
+  connect: [RecipeWhereUniqueInput!]
+  disconnect: [RecipeWhereUniqueInput!]
+  delete: [RecipeWhereUniqueInput!]
+  update: [RecipeUpdateWithWhereUniqueNestedInput!]
+  upsert: [RecipeUpsertWithWhereUniqueNestedInput!]
+}
+
+input RecipeUpdateWithWhereUniqueNestedInput {
+  where: RecipeWhereUniqueInput!
+  data: RecipeUpdateDataInput!
+}
+
+input RecipeUpsertWithWhereUniqueNestedInput {
+  where: RecipeWhereUniqueInput!
+  update: RecipeUpdateDataInput!
+  create: RecipeCreateInput!
+}
+
+input RecipeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RecipeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RecipeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RecipeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  yield: Int
+
+  """All values that are not equal to given value."""
+  yield_not: Int
+
+  """All values that are contained in given list."""
+  yield_in: [Int!]
+
+  """All values that are not contained in given list."""
+  yield_not_in: [Int!]
+
+  """All values less than the given value."""
+  yield_lt: Int
+
+  """All values less than or equal the given value."""
+  yield_lte: Int
+
+  """All values greater than the given value."""
+  yield_gt: Int
+
+  """All values greater than or equal the given value."""
+  yield_gte: Int
+  equipment_every: EquipmentWhereInput
+  equipment_some: EquipmentWhereInput
+  equipment_none: EquipmentWhereInput
+  ingredients_every: IngredientWhereInput
+  ingredients_some: IngredientWhereInput
+  ingredients_none: IngredientWhereInput
+}
+
+input RecipeWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
+  timeline(where: TimelineSubscriptionWhereInput): TimelineSubscriptionPayload
+  equipment(where: EquipmentSubscriptionWhereInput): EquipmentSubscriptionPayload
+  ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
+}
+
+type Timeline implements Node {
+  id: ID!
+  owner(where: UserWhereInput): User!
+  recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe!]
+}
+
+"""A connection to a list of items."""
+type TimelineConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TimelineEdge]!
+  aggregate: AggregateTimeline!
+}
+
+input TimelineCreateInput {
+  owner: UserCreateOneWithoutTimelineInput!
+  recipes: RecipeCreateManyInput
+}
+
+input TimelineCreateOneWithoutOwnerInput {
+  create: TimelineCreateWithoutOwnerInput
+  connect: TimelineWhereUniqueInput
+}
+
+input TimelineCreateWithoutOwnerInput {
+  recipes: RecipeCreateManyInput
+}
+
+"""An edge in a connection."""
+type TimelineEdge {
+  """The item at the end of the edge."""
+  node: Timeline!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TimelineOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TimelinePreviousValues {
+  id: ID!
+}
+
+type TimelineSubscriptionPayload {
+  mutation: MutationType!
+  node: Timeline
+  updatedFields: [String!]
+  previousValues: TimelinePreviousValues
+}
+
+input TimelineSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TimelineSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TimelineSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TimelineSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TimelineWhereInput
+}
+
+input TimelineUpdateInput {
+  owner: UserUpdateOneWithoutTimelineInput
+  recipes: RecipeUpdateManyInput
+}
+
+input TimelineUpdateOneWithoutOwnerInput {
+  create: TimelineCreateWithoutOwnerInput
+  connect: TimelineWhereUniqueInput
+  delete: Boolean
+  update: TimelineUpdateWithoutOwnerDataInput
+  upsert: TimelineUpsertWithoutOwnerInput
+}
+
+input TimelineUpdateWithoutOwnerDataInput {
+  recipes: RecipeUpdateManyInput
+}
+
+input TimelineUpsertWithoutOwnerInput {
+  update: TimelineUpdateWithoutOwnerDataInput!
+  create: TimelineCreateWithoutOwnerInput!
+}
+
+input TimelineWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TimelineWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TimelineWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TimelineWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  owner: UserWhereInput
+  recipes_every: RecipeWhereInput
+  recipes_some: RecipeWhereInput
+  recipes_none: RecipeWhereInput
+}
+
+input TimelineWhereUniqueInput {
+  id: ID
+}
+
+type User implements Node {
+  id: ID!
+  email: String!
+  password: String!
+  name: String!
+  timeline(where: TimelineWhereInput): Timeline!
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String!
+  name: String!
+  timeline: TimelineCreateOneWithoutOwnerInput!
+}
+
+input UserCreateOneWithoutTimelineInput {
+  create: UserCreateWithoutTimelineInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutTimelineInput {
+  email: String!
+  password: String!
+  name: String!
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  email: String!
+  password: String!
+  name: String!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateInput {
+  email: String
+  password: String
+  name: String
+  timeline: TimelineUpdateOneWithoutOwnerInput
+}
+
+input UserUpdateOneWithoutTimelineInput {
+  create: UserCreateWithoutTimelineInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutTimelineDataInput
+  upsert: UserUpsertWithoutTimelineInput
+}
+
+input UserUpdateWithoutTimelineDataInput {
+  email: String
+  password: String
+  name: String
+}
+
+input UserUpsertWithoutTimelineInput {
+  update: UserUpdateWithoutTimelineDataInput!
+  create: UserCreateWithoutTimelineInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  timeline: TimelineWhereInput
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
