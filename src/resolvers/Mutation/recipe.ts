@@ -2,7 +2,15 @@ import { Context, getUserId } from '../../utils';
 export const recipe = {
   async createRecipe(parent, args, ctx: Context, info) {
     const id = getUserId(ctx);
-    return ctx.db.mutation.updateUser({
+    const recipe = await ctx.db.mutation.createRecipe({
+      data: {
+        name: args.name,
+        yield: args.yield,
+        equipment: args.equipment,
+        ingredients: args.ingredients
+      }
+    });
+    await ctx.db.mutation.updateUser({
       where: {
         id
       },
@@ -10,16 +18,14 @@ export const recipe = {
         timeline: {
           update: {
             recipes: {
-              create: {
-                name: args.name,
-                yield: args.yield,
-                equipment: args.equipment,
-                ingredients: args.ingredients
+              connect: {
+                id: recipe.id
               }
             }
           }
         }
       }
     });
+    return recipe;
   }
 };
