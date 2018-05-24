@@ -3,6 +3,7 @@ import { Prisma } from './generated/prisma';
 import resolvers from './resolvers';
 
 // one recompile-y comment
+
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
