@@ -21,6 +21,7 @@ type Mutation {
     equipment: EquipmentCreateManyInput!
     ingredients: IngredientCreateManyInput!
   ): Recipe
+  updateRecipe(id: ID!, data: RecipeUpdateInput!): Recipe
 }
 
 type AuthPayload {

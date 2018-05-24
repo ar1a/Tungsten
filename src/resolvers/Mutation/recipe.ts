@@ -27,5 +27,29 @@ export const recipe = {
       }
     });
     return recipe;
+  },
+
+  async updateRecipe(parent, { data, id }, ctx: Context, info) {
+    const userId = getUserId(ctx);
+    const recipeExists = await ctx.db.exists.User({
+      timeline: {
+        recipes_some: {
+          id
+        }
+      },
+      id: userId
+    });
+    if (!recipeExists) {
+      throw new Error('Recipe does not exist!');
+    }
+    return ctx.db.mutation.updateRecipe(
+      {
+        where: {
+          id
+        },
+        data
+      },
+      info
+    );
   }
 };
