@@ -16,7 +16,7 @@ type Recipe {
 
 type Timeline {
   id: ID! @unique
-  owner: User! @relation(name: "UserRecipe")
+  owner: User! @relation(name: "UserRecipe") 
   recipes: [Recipe!]!
 }
 

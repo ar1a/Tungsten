@@ -4,9 +4,23 @@ type Query {
   me: User
 }
 
+input EquipmentCreateManyInput {
+  create: [EquipmentCreateInput!]
+}
+
+input IngredientCreateManyInput {
+  create: [IngredientCreateInput!]
+}
+
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  createRecipe(
+    name: String!
+    yield: Int
+    equipment: EquipmentCreateManyInput!
+    ingredients: IngredientCreateManyInput!
+  ): Recipe
 }
 
 type AuthPayload {
