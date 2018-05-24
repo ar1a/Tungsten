@@ -12,6 +12,18 @@ input IngredientCreateManyInput {
   create: [IngredientCreateInput!]
 }
 
+input EquipmentUpdateManyInput {
+  create: [EquipmentCreateInput!]
+  delete: [EquipmentWhereUniqueInput!]
+  update: [EquipmentWhereUniqueInput!]
+}
+
+input IngredientUpdateManyInput {
+  create: [IngredientCreateInput!]
+  delete: [IngredientWhereUniqueInput!]
+  update: [IngredientWhereUniqueInput!]
+}
+
 type Mutation {
   signup(email: String!, password: String!, name: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
