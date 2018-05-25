@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Client, Provider } from 'urql';
 import './index.css';
 import App from './App';
@@ -9,7 +10,6 @@ const client = new Client({
   url: 'http://localhost:4000/',
   fetchOptions: () => {
     const token = window.localStorage.getItem('token');
-    console.log(token);
     if (token) {
       return {
         headers: {
@@ -24,7 +24,9 @@ const client = new Client({
 
 ReactDOM.render(
   <Provider client={client}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );
