@@ -109,7 +109,7 @@ export default class CreateRecipe extends React.Component {
                         <CardText>
                           {values.ingredients &&
                             values.ingredients.map((ing, index) => (
-                              <div key={index}>
+                              <div key={ing}>
                                 <Field
                                   name={`ingredients.${index}`}
                                   label="Name"
@@ -140,6 +140,7 @@ export default class CreateRecipe extends React.Component {
                             type="button"
                             flat
                             onClick={() => arrayHelpers.push('')}
+                            style={{ width: '100%' }}
                           >
                             Add
                           </Button>
@@ -160,7 +161,7 @@ export default class CreateRecipe extends React.Component {
                         <CardText>
                           {values.equipment &&
                             values.equipment.map((ing, index) => (
-                              <div key={index}>
+                              <div key={ing}>
                                 <Field
                                   name={`equipment.${index}`}
                                   label="Name"
@@ -191,6 +192,7 @@ export default class CreateRecipe extends React.Component {
                             type="button"
                             flat
                             onClick={() => arrayHelpers.push('')}
+                            style={{ width: '100%' }}
                           >
                             Add
                           </Button>
