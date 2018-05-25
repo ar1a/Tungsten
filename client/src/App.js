@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NavigationDrawer } from 'react-md';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
 import Login from './Login';
@@ -21,12 +21,14 @@ const navItems = [
     label: 'Login',
     to: '/login',
     icon: 'people',
+    title: 'Login',
     shouldHide: () => window.localStorage.getItem('token')
   },
   {
     label: 'Create new Recipe',
     to: '/new-recipe',
     icon: 'add',
+    title: 'New Recipe',
     requireAuth: true
   },
   {
@@ -38,14 +40,20 @@ const navItems = [
 ];
 
 class App extends Component {
+  getTitle = path => {
+    const match = navItems.find(x =>
+      matchPath(path, { path: x.to, exact: x.exact })
+    );
+    return (match && match.title) || 'Tungsten';
+  };
   render() {
     return (
       <div className="App">
         <Route
           render={({ location }) => (
             <NavigationDrawer
+              toolbarTitle={this.getTitle(location.pathname)}
               drawerTitle="Tungsten"
-              toolbarTitle="Tungsten"
               navItems={navItems.map(props => (
                 <NavLink {...props} key={props.to} />
               ))}
