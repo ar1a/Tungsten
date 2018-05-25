@@ -51,5 +51,21 @@ export const recipe = {
       },
       info
     );
+  },
+
+  async deleteRecipe(parent, { id }, ctx: Context, info) {
+    const userId = getUserId(ctx);
+    const recipeExists = await ctx.db.exists.User({
+      timeline: {
+        recipes_some: {
+          id
+        }
+      },
+      id: userId
+    });
+    if (!recipeExists) return null;
+    return ctx.db.mutation.deleteRecipe({
+      where: { id }
+    });
   }
 };

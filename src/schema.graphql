@@ -34,6 +34,7 @@ type Mutation {
     ingredients: IngredientCreateManyInput!
   ): Recipe
   updateRecipe(id: ID!, data: RecipeUpdateInput!): Recipe
+  deleteRecipe(id: ID!): Recipe
 }
 
 type AuthPayload {
