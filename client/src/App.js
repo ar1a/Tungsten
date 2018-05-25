@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { FocusStyleManager } from '@blueprintjs/core';
-import { query, mutation, Connect } from 'urql';
+import { query, Connect } from 'urql';
+import Login from './Login';
+import './App.css';
 
 // http://blueprintjs.com/docs/v2/#core/accessibility
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -14,25 +16,16 @@ const HOME_QUERY = `
 }
 `;
 
-const LOGIN_MUTATION = mutation(`
-mutation ($email: String!, $password: String!) {
-  login(email: $email, password: $password) {
-    token
-    user {
-      name
-    }
-  }
-}
-`);
-
 class App extends Component {
   render() {
     return (
-      <Connect query={query(HOME_QUERY)} mutation={{ login: LOGIN_MUTATION }}>
-        {({ data, loaded, ...rest }) => {
-          console.log(data, loaded, rest);
-          return <div className="App">Hello</div>;
-        }}
+      <Connect query={query(HOME_QUERY)}>
+        {({ data }) => (
+          <div className="App">
+            {data && data.me && data.me.email}
+            <Login />
+          </div>
+        )}
       </Connect>
     );
   }

@@ -6,7 +6,19 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new Client({
-  url: 'http://localhost:4000/'
+  url: 'http://localhost:4000/',
+  fetchOptions: () => {
+    const token = window.localStorage.getItem('token');
+    console.log(token);
+    if (token) {
+      return {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+    }
+    return {};
+  }
 });
 
 ReactDOM.render(
