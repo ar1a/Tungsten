@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { withRouter, BrowserRouter as Router } from 'react-router-dom';
 import { Client, Provider } from 'urql';
 import './index.css';
 import App from './App';
@@ -22,10 +22,26 @@ const client = new Client({
   }
 });
 
+class ScrollToTop extends React.Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+const ScrollToTopWrapper = withRouter(ScrollToTop);
+
 ReactDOM.render(
   <Provider client={client}>
     <Router>
-      <App />
+      <ScrollToTopWrapper>
+        <App />
+      </ScrollToTopWrapper>
     </Router>
   </Provider>,
   document.getElementById('root')
