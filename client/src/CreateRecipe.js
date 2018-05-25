@@ -55,7 +55,16 @@ export default class CreateRecipe extends React.Component {
             .integer('must be integer'),
           ingredients: yup
             .array()
-            .of(yup.string().required('required'))
+            .of(
+              yup.object().shape({
+                name: yup.string().required('required'),
+                quantity: yup
+                  .number('not a number')
+                  .typeError('quantity must be a number')
+                  .required('required')
+                  .positive('must be positive')
+              })
+            )
             .required('Must have ingredients'),
           equipment: yup
             .array()
@@ -72,9 +81,6 @@ export default class CreateRecipe extends React.Component {
           <form onSubmit={handleSubmit} className="md-text-container">
             <Grid>
               <br />
-              <Cell size={12}>
-                <h1 className="md-text-center">New Recipe</h1>
-              </Cell>
               <Cell size={12}>
                 <Field
                   customSize="title"
@@ -109,29 +115,57 @@ export default class CreateRecipe extends React.Component {
                         <CardText>
                           {values.ingredients &&
                             values.ingredients.map((ing, index) => (
-                              <div key={ing}>
-                                <Field
-                                  name={`ingredients.${index}`}
-                                  label="Name"
-                                  placeholder="What are you cooking with?"
-                                  error={
-                                    !!get(bag.errors, `ingredients[${index}]`)
-                                  }
-                                  errorText={get(
-                                    bag.errors,
-                                    `ingredients[${index}]`
-                                  )}
-                                  component={renderTextField}
-                                  inlineIndicator={
-                                    <Button
-                                      className="text-fields__inline-btn"
-                                      icon
-                                      onClick={() => arrayHelpers.remove(index)}
-                                    >
-                                      close
-                                    </Button>
-                                  }
-                                />
+                              <div key={ing.id}>
+                                <Grid>
+                                  <Cell size={10}>
+                                    <Field
+                                      name={`ingredients[${index}].name`}
+                                      label="Name"
+                                      placeholder="What are you cooking with?"
+                                      error={
+                                        !!get(
+                                          bag.errors,
+                                          `ingredients[${index}].name`
+                                        )
+                                      }
+                                      errorText={get(
+                                        bag.errors,
+                                        `ingredients[${index}].name`
+                                      )}
+                                      component={renderTextField}
+                                      inlineIndicator={
+                                        <Button
+                                          className="text-fields__inline-btn"
+                                          icon
+                                          onClick={() =>
+                                            arrayHelpers.remove(index)
+                                          }
+                                        >
+                                          close
+                                        </Button>
+                                      }
+                                    />
+                                  </Cell>
+                                  <Cell size={2}>
+                                    <Field
+                                      name={`ingredients[${index}].quantity`}
+                                      label="Quantity"
+                                      type="number"
+                                      placeholder="How much are you cooking with?"
+                                      error={
+                                        !!get(
+                                          bag.errors,
+                                          `ingredients[${index}].quantity`
+                                        )
+                                      }
+                                      errorText={get(
+                                        bag.errors,
+                                        `ingredients[${index}].quantity`
+                                      )}
+                                      component={renderTextField}
+                                    />
+                                  </Cell>
+                                </Grid>
                               </div>
                             ))}
                         </CardText>
@@ -139,7 +173,13 @@ export default class CreateRecipe extends React.Component {
                           <Button
                             type="button"
                             flat
-                            onClick={() => arrayHelpers.push('')}
+                            onClick={() =>
+                              arrayHelpers.push({
+                                id: Math.floor(Math.random() * 1000),
+                                name: '',
+                                quantity: '1'
+                              })
+                            }
                             style={{ width: '100%' }}
                           >
                             Add
