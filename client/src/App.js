@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
-import { Spinner } from '@blueprintjs/core';
-import { FocusStyleManager } from '@blueprintjs/core';
+import { Spinner, FocusStyleManager } from '@blueprintjs/core';
 
 // http://blueprintjs.com/docs/v2/#core/accessibility
 FocusStyleManager.onlyShowFocusOnTabs();
