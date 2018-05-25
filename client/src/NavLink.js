@@ -2,7 +2,7 @@ import React from 'react';
 import { Link as RouterLink, Route } from 'react-router-dom';
 import { FontIcon, ListItem } from 'react-md';
 
-const NavLink = ({ label, to, exact, icon, shouldHide }) => (
+const NavLink = ({ label, to, exact, icon, shouldHide, requireAuth }) => (
   <Route path={to} exact={exact}>
     {({ match }) => {
       let leftIcon;
@@ -12,6 +12,12 @@ const NavLink = ({ label, to, exact, icon, shouldHide }) => (
 
       if (shouldHide) {
         if (shouldHide()) return null;
+      }
+
+      if (requireAuth) {
+        if (!localStorage.getItem('token')) {
+          return null;
+        }
       }
 
       return (

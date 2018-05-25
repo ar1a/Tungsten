@@ -1,2 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+.text-fields__inline-btn.md-btn {
+    height: 24px;
+    padding: 0;
+    width: 24px;
+}

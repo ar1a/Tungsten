@@ -7,13 +7,14 @@ import {
   Snackbar,
   CircularProgress as Progress,
   Collapse,
-  TextField,
   Button
 } from 'react-md';
 import * as Yup from 'yup';
 import { mutation, Connect } from 'urql';
 import clone from 'lodash/clone';
 import size from 'lodash/size';
+
+import { renderTextField } from './utils';
 
 const LOGIN_MUTATION = mutation(`
 mutation ($email: String!, $password: String!) {
@@ -25,17 +26,6 @@ mutation ($email: String!, $password: String!) {
   }
 }
 `);
-
-const renderTextField = ({ field, form: { touched, errors }, ...others }) => (
-  <TextField
-    {...field}
-    {...others}
-    onChange={(_, e) => field.onChange(e)}
-    id={field.name}
-    error={touched[field.name] && !!errors[field.name]}
-    errorText={errors[field.name]}
-  />
-);
 
 export default class Login extends React.Component {
   state = {
@@ -55,6 +45,25 @@ export default class Login extends React.Component {
       return { toasts };
     });
   };
+
+  componentDidMount() {
+    this.focus();
+  }
+
+  componentDidUpdate() {
+    this.focus();
+  }
+
+  setRef = ref => {
+    this.title = ref;
+  };
+
+  focus() {
+    if (this.title) {
+      this.title.focus();
+    }
+  }
+
   render() {
     return (
       <Connect mutation={{ login: LOGIN_MUTATION }}>
@@ -103,6 +112,7 @@ export default class Login extends React.Component {
                         name="email"
                         label="Email"
                         component={renderTextField}
+                        refCallback={this.setRef}
                       />
                     </Cell>
                     <Cell size={12} desktopSize={8} desktopOffset={2}>
