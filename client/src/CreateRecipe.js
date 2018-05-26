@@ -1,8 +1,10 @@
 import React from 'react';
 import {
   Card,
+  Paper,
   CardText,
   CardTitle,
+  Checkbox,
   CardActions,
   Button,
   Grid,
@@ -68,7 +70,12 @@ export default class CreateRecipe extends React.Component {
             .required('Must have ingredients'),
           equipment: yup
             .array()
-            .of(yup.string().required('required'))
+            .of(
+              yup.object().shape({
+                name: yup.string().required('required'),
+                washable: yup.bool().required('required')
+              })
+            )
             .required('Must have equipment')
         })}
         onSubmit={(values, { setSubmitting }) => {
@@ -77,7 +84,7 @@ export default class CreateRecipe extends React.Component {
           setSubmitting(false);
         }}
       >
-        {({ handleSubmit, isSubmitting, values, ...bag }) => (
+        {({ handleChange, handleSubmit, isSubmitting, values, ...bag }) => (
           <form onSubmit={handleSubmit} className="md-text-container">
             <Grid>
               <br />
@@ -115,58 +122,63 @@ export default class CreateRecipe extends React.Component {
                         <CardText>
                           {values.ingredients &&
                             values.ingredients.map((ing, index) => (
-                              <div key={ing.id}>
-                                <Grid>
-                                  <Cell size={10}>
-                                    <Field
-                                      name={`ingredients[${index}].name`}
-                                      label="Name"
-                                      placeholder="What are you cooking with?"
-                                      error={
-                                        !!get(
-                                          bag.errors,
-                                          `ingredients[${index}].name`
-                                        )
-                                      }
-                                      errorText={get(
-                                        bag.errors,
-                                        `ingredients[${index}].name`
-                                      )}
-                                      component={renderTextField}
-                                      inlineIndicator={
-                                        <Button
-                                          className="text-fields__inline-btn"
-                                          icon
-                                          onClick={() =>
-                                            arrayHelpers.remove(index)
+                              <span key={ing.id}>
+                                <Paper>
+                                  <div>
+                                    <Grid>
+                                      <Cell size={8}>
+                                        <Field
+                                          name={`ingredients[${index}].name`}
+                                          label="Name"
+                                          placeholder="What are you cooking with?"
+                                          error={
+                                            !!get(
+                                              bag.errors,
+                                              `ingredients[${index}].name`
+                                            )
                                           }
-                                        >
-                                          close
-                                        </Button>
-                                      }
-                                    />
-                                  </Cell>
-                                  <Cell size={2}>
-                                    <Field
-                                      name={`ingredients[${index}].quantity`}
-                                      label="Quantity"
-                                      type="number"
-                                      placeholder="How much are you cooking with?"
-                                      error={
-                                        !!get(
-                                          bag.errors,
-                                          `ingredients[${index}].quantity`
-                                        )
-                                      }
-                                      errorText={get(
-                                        bag.errors,
-                                        `ingredients[${index}].quantity`
-                                      )}
-                                      component={renderTextField}
-                                    />
-                                  </Cell>
-                                </Grid>
-                              </div>
+                                          errorText={get(
+                                            bag.errors,
+                                            `ingredients[${index}].name`
+                                          )}
+                                          component={renderTextField}
+                                          inlineIndicator={
+                                            <Button
+                                              className="text-fields__inline-btn"
+                                              icon
+                                              onClick={() =>
+                                                arrayHelpers.remove(index)
+                                              }
+                                            >
+                                              close
+                                            </Button>
+                                          }
+                                        />
+                                      </Cell>
+                                      <Cell>
+                                        <Field
+                                          name={`ingredients[${index}].quantity`}
+                                          label="Quantity"
+                                          type="number"
+                                          placeholder="How much are you cooking with?"
+                                          error={
+                                            !!get(
+                                              bag.errors,
+                                              `ingredients[${index}].quantity`
+                                            )
+                                          }
+                                          errorText={get(
+                                            bag.errors,
+                                            `ingredients[${index}].quantity`
+                                          )}
+                                          component={renderTextField}
+                                        />
+                                      </Cell>
+                                    </Grid>
+                                  </div>
+                                </Paper>
+                                <br />
+                              </span>
                             ))}
                         </CardText>
                         <CardActions centered>
@@ -201,37 +213,68 @@ export default class CreateRecipe extends React.Component {
                         <CardText>
                           {values.equipment &&
                             values.equipment.map((ing, index) => (
-                              <div key={ing}>
-                                <Field
-                                  name={`equipment.${index}`}
-                                  label="Name"
-                                  placeholder="What are you using to cook?"
-                                  error={
-                                    !!get(bag.errors, `equipment[${index}]`)
-                                  }
-                                  errorText={get(
-                                    bag.errors,
-                                    `equipment[${index}]`
-                                  )}
-                                  component={renderTextField}
-                                  inlineIndicator={
-                                    <Button
-                                      className="text-fields__inline-btn"
-                                      icon
-                                      onClick={() => arrayHelpers.remove(index)}
-                                    >
-                                      close
-                                    </Button>
-                                  }
-                                />
-                              </div>
+                              <span key={ing.id}>
+                                <Paper>
+                                  <div>
+                                    <Grid>
+                                      <Cell size={8}>
+                                        <Field
+                                          name={`equipment[${index}].name`}
+                                          label="Name"
+                                          placeholder="What are you using to cook?"
+                                          error={
+                                            !!get(
+                                              bag.errors,
+                                              `equipment[${index}].name`
+                                            )
+                                          }
+                                          errorText={get(
+                                            bag.errors,
+                                            `equipment[${index}].name`
+                                          )}
+                                          component={renderTextField}
+                                          inlineIndicator={
+                                            <Button
+                                              className="text-fields__inline-btn"
+                                              icon
+                                              onClick={() =>
+                                                arrayHelpers.remove(index)
+                                              }
+                                            >
+                                              close
+                                            </Button>
+                                          }
+                                        />
+                                      </Cell>
+                                      <Cell align="middle">
+                                        <Checkbox
+                                          name={`equipment[${index}].washable`}
+                                          id={`equipment[${index}].washable`}
+                                          label="Washable"
+                                          checked={
+                                            values.equipment[index].washable
+                                          }
+                                          onChange={(_, e) => handleChange(e)}
+                                        />
+                                      </Cell>
+                                    </Grid>
+                                  </div>
+                                </Paper>
+                                <br />
+                              </span>
                             ))}
                         </CardText>
                         <CardActions centered>
                           <Button
                             type="button"
                             flat
-                            onClick={() => arrayHelpers.push('')}
+                            onClick={() =>
+                              arrayHelpers.push({
+                                id: Math.floor(Math.random() * 1000),
+                                name: '',
+                                washable: true
+                              })
+                            }
                             style={{ width: '100%' }}
                           >
                             Add
