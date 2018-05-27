@@ -2,6 +2,8 @@ import React from 'react';
 import {
   Button,
   Card,
+  CircularProgress as Progress,
+  Collapse,
   CardActions,
   CardText,
   CardTitle,
@@ -155,6 +157,13 @@ export default class CreateRecipe extends React.Component {
               <form onSubmit={handleSubmit} className="md-text-container">
                 <Grid>
                   <br />
+                  <Cell size={12} desktopSize={8} desktopOffset={2}>
+                    <Collapse collapsed={!isSubmitting}>
+                      <div style={{ height: '52px' }}>
+                        <Progress id="progress" />
+                      </div>
+                    </Collapse>
+                  </Cell>
                   <Cell size={12}>
                     <Field
                       customSize="title"
