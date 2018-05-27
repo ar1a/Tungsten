@@ -4,12 +4,14 @@ import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
 import CreateRecipe from './CreateRecipe';
+import RecipeList from './RecipeList';
 import Home from './Home';
 import Login from './Login';
 import Logout from './Logout';
 import NavLink from './NavLink';
 import PrivateRoute from './PrivateRoute';
 import './App.css';
+import Recipe from './Recipe';
 
 const navItems = [
   {
@@ -30,6 +32,14 @@ const navItems = [
     to: '/new-recipe',
     icon: 'add',
     title: 'New Recipe',
+    requireAuth: true
+  },
+  {
+    label: 'Recipes',
+    exact: true,
+    to: '/recipes',
+    icon: 'list',
+    title: 'Recipes',
     requireAuth: true
   },
   {
@@ -63,6 +73,8 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/new-recipe" component={CreateRecipe} />
+                <PrivateRoute path="/recipes/:id" component={Recipe} />
+                <PrivateRoute path="/recipes" component={RecipeList} />
                 <Route path="/logout" component={Logout} />
               </Switch>
             </NavigationDrawer>
