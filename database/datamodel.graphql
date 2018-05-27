@@ -3,7 +3,7 @@ type User {
   email: String! @unique
   password: String!
   name: String!
-  timeline: Timeline! @relation(name: "UserRecipe")
+  timeline: Timeline!
 }
 
 type Recipe {
@@ -16,7 +16,7 @@ type Recipe {
 
 type Timeline {
   id: ID! @unique
-  owner: User! @relation(name: "UserRecipe")
+  owner: User!
   recipes: [Recipe!]!
   events: [Event!]!
 }
