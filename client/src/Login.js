@@ -83,7 +83,6 @@ export default class Login extends React.Component {
                 await invalidateAll();
               } catch (e) {
                 const errors = e.graphQLErrors.map(err => err.message);
-                actions.setErrors({ form: errors });
                 this.addToast(errors[0]);
                 actions.setSubmitting(false);
               }
