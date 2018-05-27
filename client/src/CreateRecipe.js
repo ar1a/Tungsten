@@ -1,19 +1,21 @@
 import React from 'react';
 import {
+  Button,
   Card,
-  Paper,
+  CardActions,
   CardText,
   CardTitle,
+  Cell,
   Checkbox,
-  CardActions,
-  Button,
   Grid,
-  Cell
+  Paper,
+  Snackbar
 } from 'react-md';
 import { FieldArray, Field, Formik } from 'formik';
 import get from 'lodash/get';
 import trim from 'lodash/trim';
 import omit from 'lodash/omit';
+import clone from 'lodash/clone';
 import * as yup from 'yup';
 import { Connect, mutation } from 'urql';
 import { renderTextField } from './utils';
@@ -56,6 +58,10 @@ export default class CreateRecipe extends React.Component {
     this.title = React.createRef();
   }
 
+  state = {
+    toasts: []
+  };
+
   componentDidMount() {
     this.focus();
   }
@@ -66,6 +72,14 @@ export default class CreateRecipe extends React.Component {
 
   setRef = ref => {
     this.title = ref;
+  };
+
+  addToast = (text, action) => {
+    this.setState(state => {
+      const toasts = clone(state.toasts);
+      toasts.push({ text, action });
+      return { toasts };
+    });
   };
 
   focus() {
@@ -121,14 +135,20 @@ export default class CreateRecipe extends React.Component {
             ) => {
               const ingredients = I.map(i => omit(i, 'id'));
               const equipment = E.map(e => omit(e, 'id'));
-              const thing = await create({
-                name,
-                yield: Yield,
-                ingredients,
-                equipment
-              });
-              setSubmitting(false);
-              this.props.history.push('/');
+              try {
+                await create({
+                  name,
+                  yield: Yield,
+                  ingredients,
+                  equipment
+                });
+                setSubmitting(false);
+                this.props.history.push('/');
+              } catch (e) {
+                this.addToast(`An error occured: ${e.message}`);
+                console.error(e);
+                setSubmitting(false);
+              }
             }}
           >
             {({ handleChange, handleSubmit, isSubmitting, values, ...bag }) => (
@@ -376,6 +396,11 @@ export default class CreateRecipe extends React.Component {
                       Create
                     </Button>
                   </Cell>
+                  <Snackbar
+                    toasts={this.state.toasts}
+                    autohide
+                    onDismiss={() => {}}
+                  />
                 </Grid>
               </form>
             )}
