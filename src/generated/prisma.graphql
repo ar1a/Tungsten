@@ -1,11 +1,19 @@
 # source: http://localhost:4466
-# timestamp: Thu May 24 2018 15:15:56 GMT+1000 (AEST)
+# timestamp: Sun May 27 2018 19:31:28 GMT+1000 (AEST)
 
 type AggregateEquipment {
   count: Int!
 }
 
+type AggregateEvent {
+  count: Int!
+}
+
 type AggregateIngredient {
+  count: Int!
+}
+
+type AggregateJam {
   count: Int!
 }
 
@@ -245,6 +253,231 @@ input EquipmentWhereInput {
 }
 
 input EquipmentWhereUniqueInput {
+  id: ID
+}
+
+type Event implements Node {
+  id: ID!
+  timeline(where: TimelineWhereInput): Timeline!
+  date: String!
+  jam(where: JamWhereInput): Jam!
+}
+
+"""A connection to a list of items."""
+type EventConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EventEdge]!
+  aggregate: AggregateEvent!
+}
+
+input EventCreateInput {
+  date: String!
+  timeline: TimelineCreateOneWithoutEventsInput!
+  jam: JamCreateOneInput!
+}
+
+input EventCreateManyWithoutTimelineInput {
+  create: [EventCreateWithoutTimelineInput!]
+  connect: [EventWhereUniqueInput!]
+}
+
+input EventCreateWithoutTimelineInput {
+  date: String!
+  jam: JamCreateOneInput!
+}
+
+"""An edge in a connection."""
+type EventEdge {
+  """The item at the end of the edge."""
+  node: Event!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EventOrderByInput {
+  id_ASC
+  id_DESC
+  date_ASC
+  date_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EventPreviousValues {
+  id: ID!
+  date: String!
+}
+
+type EventSubscriptionPayload {
+  mutation: MutationType!
+  node: Event
+  updatedFields: [String!]
+  previousValues: EventPreviousValues
+}
+
+input EventSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EventWhereInput
+}
+
+input EventUpdateInput {
+  date: String
+  timeline: TimelineUpdateOneWithoutEventsInput
+  jam: JamUpdateOneInput
+}
+
+input EventUpdateManyWithoutTimelineInput {
+  create: [EventCreateWithoutTimelineInput!]
+  connect: [EventWhereUniqueInput!]
+  disconnect: [EventWhereUniqueInput!]
+  delete: [EventWhereUniqueInput!]
+  update: [EventUpdateWithWhereUniqueWithoutTimelineInput!]
+  upsert: [EventUpsertWithWhereUniqueWithoutTimelineInput!]
+}
+
+input EventUpdateWithoutTimelineDataInput {
+  date: String
+  jam: JamUpdateOneInput
+}
+
+input EventUpdateWithWhereUniqueWithoutTimelineInput {
+  where: EventWhereUniqueInput!
+  data: EventUpdateWithoutTimelineDataInput!
+}
+
+input EventUpsertWithWhereUniqueWithoutTimelineInput {
+  where: EventWhereUniqueInput!
+  update: EventUpdateWithoutTimelineDataInput!
+  create: EventCreateWithoutTimelineInput!
+}
+
+input EventWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EventWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EventWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EventWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  date: String
+
+  """All values that are not equal to given value."""
+  date_not: String
+
+  """All values that are contained in given list."""
+  date_in: [String!]
+
+  """All values that are not contained in given list."""
+  date_not_in: [String!]
+
+  """All values less than the given value."""
+  date_lt: String
+
+  """All values less than or equal the given value."""
+  date_lte: String
+
+  """All values greater than the given value."""
+  date_gt: String
+
+  """All values greater than or equal the given value."""
+  date_gte: String
+
+  """All values containing the given string."""
+  date_contains: String
+
+  """All values not containing the given string."""
+  date_not_contains: String
+
+  """All values starting with the given string."""
+  date_starts_with: String
+
+  """All values not starting with the given string."""
+  date_not_starts_with: String
+
+  """All values ending with the given string."""
+  date_ends_with: String
+
+  """All values not ending with the given string."""
+  date_not_ends_with: String
+  timeline: TimelineWhereInput
+  jam: JamWhereInput
+}
+
+input EventWhereUniqueInput {
   id: ID
 }
 
@@ -517,6 +750,168 @@ input IngredientWhereUniqueInput {
   id: ID
 }
 
+type Jam implements Node {
+  id: ID!
+  recipe(where: RecipeWhereInput): Recipe!
+}
+
+"""A connection to a list of items."""
+type JamConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [JamEdge]!
+  aggregate: AggregateJam!
+}
+
+input JamCreateInput {
+  recipe: RecipeCreateOneInput!
+}
+
+input JamCreateOneInput {
+  create: JamCreateInput
+  connect: JamWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type JamEdge {
+  """The item at the end of the edge."""
+  node: Jam!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum JamOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type JamPreviousValues {
+  id: ID!
+}
+
+type JamSubscriptionPayload {
+  mutation: MutationType!
+  node: Jam
+  updatedFields: [String!]
+  previousValues: JamPreviousValues
+}
+
+input JamSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [JamSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [JamSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [JamSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: JamWhereInput
+}
+
+input JamUpdateDataInput {
+  recipe: RecipeUpdateOneInput
+}
+
+input JamUpdateInput {
+  recipe: RecipeUpdateOneInput
+}
+
+input JamUpdateOneInput {
+  create: JamCreateInput
+  connect: JamWhereUniqueInput
+  delete: Boolean
+  update: JamUpdateDataInput
+  upsert: JamUpsertNestedInput
+}
+
+input JamUpsertNestedInput {
+  update: JamUpdateDataInput!
+  create: JamCreateInput!
+}
+
+input JamWhereInput {
+  """Logical AND on all given filters."""
+  AND: [JamWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [JamWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [JamWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  recipe: RecipeWhereInput
+}
+
+input JamWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -529,31 +924,43 @@ type Mutation {
   createTimeline(data: TimelineCreateInput!): Timeline!
   createEquipment(data: EquipmentCreateInput!): Equipment!
   createIngredient(data: IngredientCreateInput!): Ingredient!
+  createEvent(data: EventCreateInput!): Event!
+  createJam(data: JamCreateInput!): Jam!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
   updateTimeline(data: TimelineUpdateInput!, where: TimelineWhereUniqueInput!): Timeline
   updateEquipment(data: EquipmentUpdateInput!, where: EquipmentWhereUniqueInput!): Equipment
   updateIngredient(data: IngredientUpdateInput!, where: IngredientWhereUniqueInput!): Ingredient
+  updateEvent(data: EventUpdateInput!, where: EventWhereUniqueInput!): Event
+  updateJam(data: JamUpdateInput!, where: JamWhereUniqueInput!): Jam
   deleteUser(where: UserWhereUniqueInput!): User
   deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
   deleteTimeline(where: TimelineWhereUniqueInput!): Timeline
   deleteEquipment(where: EquipmentWhereUniqueInput!): Equipment
   deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
+  deleteEvent(where: EventWhereUniqueInput!): Event
+  deleteJam(where: JamWhereUniqueInput!): Jam
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
   upsertTimeline(where: TimelineWhereUniqueInput!, create: TimelineCreateInput!, update: TimelineUpdateInput!): Timeline!
   upsertEquipment(where: EquipmentWhereUniqueInput!, create: EquipmentCreateInput!, update: EquipmentUpdateInput!): Equipment!
   upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
+  upsertEvent(where: EventWhereUniqueInput!, create: EventCreateInput!, update: EventUpdateInput!): Event!
+  upsertJam(where: JamWhereUniqueInput!, create: JamCreateInput!, update: JamUpdateInput!): Jam!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyRecipes(data: RecipeUpdateInput!, where: RecipeWhereInput): BatchPayload!
   updateManyTimelines(data: TimelineUpdateInput!, where: TimelineWhereInput): BatchPayload!
   updateManyEquipments(data: EquipmentUpdateInput!, where: EquipmentWhereInput): BatchPayload!
   updateManyIngredients(data: IngredientUpdateInput!, where: IngredientWhereInput): BatchPayload!
+  updateManyEvents(data: EventUpdateInput!, where: EventWhereInput): BatchPayload!
+  updateManyJams(data: JamUpdateInput!, where: JamWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
   deleteManyTimelines(where: TimelineWhereInput): BatchPayload!
   deleteManyEquipments(where: EquipmentWhereInput): BatchPayload!
   deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
+  deleteManyEvents(where: EventWhereInput): BatchPayload!
+  deleteManyJams(where: JamWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -589,16 +996,22 @@ type Query {
   timelines(where: TimelineWhereInput, orderBy: TimelineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Timeline]!
   equipments(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Equipment]!
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event]!
+  jams(where: JamWhereInput, orderBy: JamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Jam]!
   user(where: UserWhereUniqueInput!): User
   recipe(where: RecipeWhereUniqueInput!): Recipe
   timeline(where: TimelineWhereUniqueInput!): Timeline
   equipment(where: EquipmentWhereUniqueInput!): Equipment
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
+  event(where: EventWhereUniqueInput!): Event
+  jam(where: JamWhereUniqueInput!): Jam
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
   timelinesConnection(where: TimelineWhereInput, orderBy: TimelineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TimelineConnection!
   equipmentsConnection(where: EquipmentWhereInput, orderBy: EquipmentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EquipmentConnection!
   ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
+  eventsConnection(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EventConnection!
+  jamsConnection(where: JamWhereInput, orderBy: JamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): JamConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -635,6 +1048,11 @@ input RecipeCreateInput {
 input RecipeCreateManyInput {
   create: [RecipeCreateInput!]
   connect: [RecipeWhereUniqueInput!]
+}
+
+input RecipeCreateOneInput {
+  create: RecipeCreateInput
+  connect: RecipeWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -727,9 +1145,22 @@ input RecipeUpdateManyInput {
   upsert: [RecipeUpsertWithWhereUniqueNestedInput!]
 }
 
+input RecipeUpdateOneInput {
+  create: RecipeCreateInput
+  connect: RecipeWhereUniqueInput
+  delete: Boolean
+  update: RecipeUpdateDataInput
+  upsert: RecipeUpsertNestedInput
+}
+
 input RecipeUpdateWithWhereUniqueNestedInput {
   where: RecipeWhereUniqueInput!
   data: RecipeUpdateDataInput!
+}
+
+input RecipeUpsertNestedInput {
+  update: RecipeUpdateDataInput!
+  create: RecipeCreateInput!
 }
 
 input RecipeUpsertWithWhereUniqueNestedInput {
@@ -867,12 +1298,15 @@ type Subscription {
   timeline(where: TimelineSubscriptionWhereInput): TimelineSubscriptionPayload
   equipment(where: EquipmentSubscriptionWhereInput): EquipmentSubscriptionPayload
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
+  event(where: EventSubscriptionWhereInput): EventSubscriptionPayload
+  jam(where: JamSubscriptionWhereInput): JamSubscriptionPayload
 }
 
 type Timeline implements Node {
   id: ID!
   owner(where: UserWhereInput): User!
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe!]
+  events(where: EventWhereInput, orderBy: EventOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Event!]
 }
 
 """A connection to a list of items."""
@@ -888,6 +1322,12 @@ type TimelineConnection {
 input TimelineCreateInput {
   owner: UserCreateOneWithoutTimelineInput!
   recipes: RecipeCreateManyInput
+  events: EventCreateManyWithoutTimelineInput
+}
+
+input TimelineCreateOneWithoutEventsInput {
+  create: TimelineCreateWithoutEventsInput
+  connect: TimelineWhereUniqueInput
 }
 
 input TimelineCreateOneWithoutOwnerInput {
@@ -895,8 +1335,14 @@ input TimelineCreateOneWithoutOwnerInput {
   connect: TimelineWhereUniqueInput
 }
 
+input TimelineCreateWithoutEventsInput {
+  owner: UserCreateOneWithoutTimelineInput!
+  recipes: RecipeCreateManyInput
+}
+
 input TimelineCreateWithoutOwnerInput {
   recipes: RecipeCreateManyInput
+  events: EventCreateManyWithoutTimelineInput
 }
 
 """An edge in a connection."""
@@ -963,6 +1409,15 @@ input TimelineSubscriptionWhereInput {
 input TimelineUpdateInput {
   owner: UserUpdateOneWithoutTimelineInput
   recipes: RecipeUpdateManyInput
+  events: EventUpdateManyWithoutTimelineInput
+}
+
+input TimelineUpdateOneWithoutEventsInput {
+  create: TimelineCreateWithoutEventsInput
+  connect: TimelineWhereUniqueInput
+  delete: Boolean
+  update: TimelineUpdateWithoutEventsDataInput
+  upsert: TimelineUpsertWithoutEventsInput
 }
 
 input TimelineUpdateOneWithoutOwnerInput {
@@ -973,8 +1428,19 @@ input TimelineUpdateOneWithoutOwnerInput {
   upsert: TimelineUpsertWithoutOwnerInput
 }
 
+input TimelineUpdateWithoutEventsDataInput {
+  owner: UserUpdateOneWithoutTimelineInput
+  recipes: RecipeUpdateManyInput
+}
+
 input TimelineUpdateWithoutOwnerDataInput {
   recipes: RecipeUpdateManyInput
+  events: EventUpdateManyWithoutTimelineInput
+}
+
+input TimelineUpsertWithoutEventsInput {
+  update: TimelineUpdateWithoutEventsDataInput!
+  create: TimelineCreateWithoutEventsInput!
 }
 
 input TimelineUpsertWithoutOwnerInput {
@@ -1035,6 +1501,9 @@ input TimelineWhereInput {
   recipes_every: RecipeWhereInput
   recipes_some: RecipeWhereInput
   recipes_none: RecipeWhereInput
+  events_every: EventWhereInput
+  events_some: EventWhereInput
+  events_none: EventWhereInput
 }
 
 input TimelineWhereUniqueInput {

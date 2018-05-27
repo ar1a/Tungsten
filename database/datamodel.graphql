@@ -18,6 +18,7 @@ type Timeline {
   id: ID! @unique
   owner: User! @relation(name: "UserRecipe")
   recipes: [Recipe!]!
+  events: [Event!]!
 }
 
 type Equipment {
@@ -31,4 +32,18 @@ type Ingredient {
   name: String!
   quantity: Float!
   scale: Float @default(value: "1")
+}
+
+# union EventContent = Jam | Meal
+
+type Event {
+  id: ID! @unique
+  timeline: Timeline!
+  date: String!
+  jam: Jam!
+}
+
+type Jam {
+  id: ID! @unique
+  recipe: Recipe!
 }
