@@ -3,11 +3,12 @@ import { NavigationDrawer } from 'react-md';
 import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
-import Login from './Login';
-import Logout from './Logout';
 import CreateRecipe from './CreateRecipe';
 import Home from './Home';
+import Login from './Login';
+import Logout from './Logout';
 import NavLink from './NavLink';
+import PrivateRoute from './PrivateRoute';
 import './App.css';
 
 const navItems = [
@@ -61,7 +62,7 @@ class App extends Component {
               <Switch key={location.pathname}>
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
-                <Route path="/new-recipe" component={CreateRecipe} />
+                <PrivateRoute path="/new-recipe" component={CreateRecipe} />
                 <Route path="/logout" component={Logout} />
               </Switch>
             </NavigationDrawer>

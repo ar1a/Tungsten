@@ -31,20 +31,6 @@ export default class Login extends React.Component {
   state = {
     toasts: []
   };
-  addToast = (text, action) => {
-    this.setState(state => {
-      const toasts = clone(state.toasts);
-      toasts.push({ text, action });
-      return { toasts };
-    });
-  };
-
-  dismissToast = () => {
-    this.setState(state => {
-      const [, ...toasts] = state.toasts;
-      return { toasts };
-    });
-  };
 
   componentDidMount() {
     this.focus();
@@ -58,6 +44,21 @@ export default class Login extends React.Component {
     this.title = ref;
   };
 
+  dismissToast = () => {
+    this.setState(state => {
+      const [, ...toasts] = state.toasts;
+      return { toasts };
+    });
+  };
+
+  addToast = (text, action) => {
+    this.setState(state => {
+      const toasts = clone(state.toasts);
+      toasts.push({ text, action });
+      return { toasts };
+    });
+  };
+
   focus() {
     if (this.title) {
       this.title.focus();
@@ -65,6 +66,7 @@ export default class Login extends React.Component {
   }
 
   render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     return (
       <Connect mutation={{ login: LOGIN_MUTATION }}>
         {({ login, cache: { invalidateAll } }) => (
@@ -95,7 +97,7 @@ export default class Login extends React.Component {
           >
             {({ isSubmitting, errors }) => {
               if (window.localStorage.getItem('token')) {
-                return <Redirect to="/" />;
+                return <Redirect to={from} />;
               }
               return (
                 <Form className="md-text-container">
