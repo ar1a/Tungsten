@@ -12,6 +12,7 @@ import {
 } from 'react-md';
 import { FieldArray, Field, Formik } from 'formik';
 import get from 'lodash/get';
+import trim from 'lodash/trim';
 import * as yup from 'yup';
 import { renderTextField } from './utils';
 
@@ -146,9 +147,22 @@ export default class CreateRecipe extends React.Component {
                                             <Button
                                               className="text-fields__inline-btn"
                                               icon
-                                              onClick={() =>
-                                                arrayHelpers.remove(index)
-                                              }
+                                              onClick={e => {
+                                                if (
+                                                  trim(
+                                                    values.ingredients[index]
+                                                      .name
+                                                  ) &&
+                                                  !e.ctrlKey
+                                                ) {
+                                                  bag.setFieldValue(
+                                                    `ingredients[${index}].name`,
+                                                    ''
+                                                  );
+                                                } else {
+                                                  arrayHelpers.remove(index);
+                                                }
+                                              }}
                                             >
                                               close
                                             </Button>
@@ -237,9 +251,21 @@ export default class CreateRecipe extends React.Component {
                                             <Button
                                               className="text-fields__inline-btn"
                                               icon
-                                              onClick={() =>
-                                                arrayHelpers.remove(index)
-                                              }
+                                              onClick={e => {
+                                                if (
+                                                  trim(
+                                                    values.equipment[index].name
+                                                  ) &&
+                                                  !e.ctrlKey
+                                                ) {
+                                                  bag.setFieldValue(
+                                                    `equipment[${index}].name`,
+                                                    ''
+                                                  );
+                                                } else {
+                                                  arrayHelpers.remove(index);
+                                                }
+                                              }}
                                             >
                                               close
                                             </Button>
