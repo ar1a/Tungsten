@@ -32,7 +32,8 @@ const navItems = [
     to: '/new-recipe',
     icon: 'add',
     title: 'New Recipe',
-    requireAuth: true
+    requireAuth: true,
+    shouldHide: () => true
   },
   {
     label: 'Recipes',

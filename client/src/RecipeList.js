@@ -58,5 +58,16 @@ export default ({ history }) => (
         </Cell>
       )}
     </Connect>
+    <Button
+      tooltipLabel="Create a Recipe"
+      tooltipPosition="left"
+      primary
+      fixed
+      floating
+      onClick={() => history.push('/new-recipe')}
+      icon
+    >
+      add
+    </Button>
   </Grid>
 );
