@@ -82,6 +82,18 @@ const Recipe = ({ recipe, del, history }) => (
       <br />
       <Button
         onClick={() => {
+          history.push(`/recipes/${recipe.id}/edit`);
+        }}
+        floating
+        primary
+        tooltipLabel="Edit this Recipe"
+        tooltipPosition="left"
+        fixed
+      >
+        edit
+      </Button>
+      <Button
+        onClick={() => {
           del({ id: recipe.id }).then(() => {
             history.push('/recipes');
           });
