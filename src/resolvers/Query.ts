@@ -1,4 +1,5 @@
-import { getUserId, Context } from '../utils';
+import Context from '../common/context';
+import { getUserId } from '../common/auth';
 
 export const Query = {
   me(parent, args, ctx: Context, info) {

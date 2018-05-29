@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
-import { Context } from '../../utils';
+import Context from '../../common/context';
 
 export const auth = {
   async signup(parent, args, ctx: Context, info) {
