@@ -70,9 +70,15 @@ export default ({
       { name, Yield, ingredients: I, equipment: E },
       { setSubmitting }
     ) => {
-      let ingredients = I.map(i => omit(i, 'id'));
+      let ingredients = I;
+      if (!edit) {
+        ingredients = ingredients.map(i => omit(i, 'id'));
+      }
       ingredients = ingredients.map(i => omit(i, '__typename'));
-      let equipment = E.map(e => omit(e, 'id'));
+      let equipment = E;
+      if (!edit) {
+        equipment = equipment.map(e => omit(e, 'id'));
+      }
       equipment = equipment.map(e => omit(e, '__typename'));
       try {
         await submit({
