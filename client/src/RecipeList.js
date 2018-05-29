@@ -65,7 +65,6 @@ export default ({ history }) => (
       fixed
       floating
       onClick={() => history.push('/new-recipe')}
-      icon
     >
       add
     </Button>
