@@ -1,14 +1,6 @@
 import React from 'react';
-import { Connect, query } from 'urql';
-import {
-  List,
-  ListItem,
-  Card,
-  CardTitle,
-  CardText,
-  Grid,
-  Cell
-} from 'react-md';
+import { Connect, query, mutation } from 'urql';
+import { List, Button, ListItem, Card, CardText, Grid, Cell } from 'react-md';
 
 const RECIPE_QUERY = `
 query ($id:ID!){
@@ -35,6 +27,13 @@ query ($id:ID!){
   }
 }
 `;
+const DELETE_MUTATION = `
+  mutation ($id: ID!) {
+    deleteRecipe(id: $id) {
+      id
+    }
+  }
+`;
 
 const ListCard = ({ title, items }) => (
   <Card>
@@ -54,7 +53,7 @@ const ListCard = ({ title, items }) => (
   </Card>
 );
 
-const Recipe = ({ recipe }) => (
+const Recipe = ({ recipe, del, history }) => (
   <Grid className="md-text-container">
     <Cell className="md-text-center" size={12}>
       <h3>{recipe.name}</h3>
@@ -80,15 +79,37 @@ const Recipe = ({ recipe }) => (
           />
         ))}
       />
+      <br />
+      <Button
+        onClick={() => {
+          del({ id: recipe.id }).then(() => {
+            history.push('/recipes');
+          });
+        }}
+        iconChildren="delete"
+        secondary
+        flat
+      >
+        Delete
+      </Button>
     </Cell>
   </Grid>
 );
 
-export default ({ match }) => (
-  <Connect query={query(RECIPE_QUERY, { id: match.params.id })}>
-    {({ loaded, data }) => {
+export default ({ history, match }) => (
+  <Connect
+    query={query(RECIPE_QUERY, { id: match.params.id })}
+    mutation={{ del: mutation(DELETE_MUTATION) }}
+  >
+    {({ loaded, data, del }) => {
       if (!loaded) return null;
-      return <Recipe recipe={data.me.timeline.recipes[0]} />;
+      return (
+        <Recipe
+          history={history}
+          recipe={data.me.timeline.recipes[0]}
+          del={del}
+        />
+      );
     }}
   </Connect>
 );
