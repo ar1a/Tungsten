@@ -4,6 +4,7 @@ import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
 import CreateRecipe from './CreateRecipe';
+import EditRecipe from './EditRecipe';
 import RecipeList from './RecipeList';
 import Home from './Home';
 import Login from './Login';
@@ -74,6 +75,7 @@ class App extends Component {
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
                 <PrivateRoute path="/new-recipe" component={CreateRecipe} />
+                <PrivateRoute path="/recipes/:id/edit" component={EditRecipe} />
                 <PrivateRoute path="/recipes/:id" component={Recipe} />
                 <PrivateRoute path="/recipes" component={RecipeList} />
                 <Route path="/logout" component={Logout} />

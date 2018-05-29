@@ -25,7 +25,8 @@ export default ({
   Yield = '1',
   ingredients = [],
   equipment = [],
-  history
+  history,
+  edit = false
 }) => (
   <Formik
     initialValues={{
@@ -34,6 +35,7 @@ export default ({
       ingredients,
       equipment
     }}
+    isInitialValid={!!edit}
     validationSchema={yup.object().shape({
       name: yup.string().required('required'),
       Yield: yup
@@ -68,8 +70,10 @@ export default ({
       { name, Yield, ingredients: I, equipment: E },
       { setSubmitting }
     ) => {
-      const ingredients = I.map(i => omit(i, 'id'));
-      const equipment = E.map(e => omit(e, 'id'));
+      let ingredients = I.map(i => omit(i, 'id'));
+      ingredients = ingredients.map(i => omit(i, '__typename'));
+      let equipment = E.map(e => omit(e, 'id'));
+      equipment = equipment.map(e => omit(e, '__typename'));
       try {
         await submit({
           name,
@@ -78,7 +82,11 @@ export default ({
           equipment
         });
         setSubmitting(false);
-        history.push('/'); // TODO: Redirect if edit
+        if (edit) {
+          history.push(`/recipes/${edit}`);
+        } else {
+          history.push('/'); // TODO: Redirect if edit
+        }
       } catch (e) {
         alert(`An error occured: ${e.message}`); // FIXME
         setSubmitting(false);
