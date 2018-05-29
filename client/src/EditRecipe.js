@@ -62,16 +62,41 @@ const EDIT_MUTATION = `
     }
   }
 `;
+
+function pickId(arr) {
+  return arr.map(i => i.id);
+}
+
+function getDeleted(newObj, original) {
+  let concat = [...pickId(newObj), ...pickId(original)];
+  concat = concat.filter(i => startsWith(i, 'c')); // you can't delete new ones!
+  const uniques = [];
+  // If the user deletes it from the list then the original object will have the
+  // ingredient/equipment and the new one won't. If we concat the arrays and
+  // then delete *every* element if it is a duplicate, we can essentially diff
+  // the array.
+  for (let i = 0, l = concat.length; i < l; ++i) {
+    if (concat.lastIndexOf(concat[i]) === concat.indexOf(concat[i]))
+      uniques.push(concat[i]);
+  }
+  return uniques.map(x => ({ id: x }));
+}
+
 // im so proud of myself
-function updateMap(i) {
+function updateMap(newObj, original) {
   const ret = {};
   // if it starts with c its from prisma (cuid)
-  ret.update = i.filter(i => startsWith(i.id, 'c')).map(({ id, ...rest }) => ({
-    where: { id },
-    data: { ...rest }
-  }));
+  ret.update = newObj
+    .filter(i => startsWith(i.id, 'c'))
+    .map(({ id, ...rest }) => ({
+      where: { id },
+      data: { ...rest }
+    }));
   // if it's a number then its from my math.random shit
-  ret.create = i.filter(i => isNumber(i.id)).map(i => omit(i, 'id'));
+  ret.create = newObj.filter(i => isNumber(i.id)).map(i => omit(i, 'id'));
+  // TODO ret.delete = getDeleted
+  ret.delete = getDeleted(newObj, original);
+
   return ret;
 }
 
@@ -82,8 +107,8 @@ const EditRecipe = ({ edit, recipe, history }) => (
       await edit({
         name,
         yield: Yield,
-        ingredients: updateMap(ingredients),
-        equipment: updateMap(equipment),
+        ingredients: updateMap(ingredients, recipe.ingredients),
+        equipment: updateMap(equipment, recipe.equipment),
         id: recipe.id
       });
     }}
