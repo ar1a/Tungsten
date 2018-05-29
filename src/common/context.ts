@@ -1,6 +1,6 @@
 import { Prisma } from '../generated/prisma';
 
-export default interface Context {
+export interface Context {
   db: Prisma;
   request: any;
 }

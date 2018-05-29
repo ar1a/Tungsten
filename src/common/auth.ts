@@ -1,7 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 
-import Context from './context';
-import { AuthError } from './error';
+import { Context, AuthError } from '.';
 
 export function getUserId(ctx: Context) {
   const Authorization = ctx.request.get('Authorization');

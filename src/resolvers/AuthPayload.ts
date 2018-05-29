@@ -1,4 +1,4 @@
-import Context from '../common/context';
+import { Context } from '../common';
 
 export const AuthPayload = {
   user: async ({ user: { id } }, args, ctx: Context, info) => {
