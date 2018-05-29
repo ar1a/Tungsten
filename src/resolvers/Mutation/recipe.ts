@@ -1,4 +1,5 @@
-import { Context, getUserId } from '../../utils';
+import { Context, getUserId } from '../../common';
+
 export const recipe = {
   async createRecipe(parent, args, ctx: Context, info) {
     const id = getUserId(ctx);

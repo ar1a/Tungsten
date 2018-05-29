@@ -1,10 +1,6 @@
 import * as jwt from 'jsonwebtoken';
-import { Prisma } from './generated/prisma';
 
-export interface Context {
-  db: Prisma;
-  request: any;
-}
+import { Context, AuthError } from '.';
 
 export function getUserId(ctx: Context) {
   const Authorization = ctx.request.get('Authorization');
@@ -17,10 +13,4 @@ export function getUserId(ctx: Context) {
   }
 
   throw new AuthError();
-}
-
-export class AuthError extends Error {
-  constructor() {
-    super('Not authorized');
-  }
 }
