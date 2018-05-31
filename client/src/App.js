@@ -3,16 +3,38 @@ import { NavigationDrawer } from 'react-md';
 import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
-import CreateRecipe from './CreateRecipe';
-import EditRecipe from './EditRecipe';
-import RecipeList from './RecipeList';
-import Home from './Home';
-import Login from './Login';
-import Logout from './Logout';
 import NavLink from './NavLink';
 import PrivateRoute from './PrivateRoute';
 import './App.css';
-import Recipe from './Recipe';
+import Loadable from './Loadable';
+
+const AsyncHome = Loadable({
+  loader: () => import('./Home')
+});
+
+const AsyncLogin = Loadable({
+  loader: () => import('./Login')
+});
+
+const AsyncCreateRecipe = Loadable({
+  loader: () => import('./CreateRecipe')
+});
+
+const AsyncRecipeList = Loadable({
+  loader: () => import('./RecipeList')
+});
+
+const AsyncLogout = Loadable({
+  loader: () => import('./Logout')
+});
+
+const AsyncRecipe = Loadable({
+  loader: () => import('./Recipe')
+});
+
+const AsyncEditRecipe = Loadable({
+  loader: () => import('./EditRecipe')
+});
 
 const navItems = [
   {
@@ -72,13 +94,19 @@ class App extends Component {
               ))}
             >
               <Switch key={location.pathname}>
-                <Route exact path="/" component={Home} />
-                <Route path="/login" component={Login} />
-                <PrivateRoute path="/new-recipe" component={CreateRecipe} />
-                <PrivateRoute path="/recipes/:id/edit" component={EditRecipe} />
-                <PrivateRoute path="/recipes/:id" component={Recipe} />
-                <PrivateRoute path="/recipes" component={RecipeList} />
-                <Route path="/logout" component={Logout} />
+                <Route exact path="/" component={AsyncHome} />
+                <Route path="/login" component={AsyncLogin} />
+                <PrivateRoute
+                  path="/new-recipe"
+                  component={AsyncCreateRecipe}
+                />
+                <PrivateRoute path="/recipes/:id" component={AsyncRecipe} />
+                <PrivateRoute
+                  path="/recipes/:id/edit"
+                  component={AsyncEditRecipe}
+                />
+                <PrivateRoute path="/recipes" component={AsyncRecipeList} />
+                <Route path="/logout" component={AsyncLogout} />
               </Switch>
             </NavigationDrawer>
           )}
