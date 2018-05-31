@@ -38,7 +38,7 @@ const onSubmit = (edit, history, submit) => async (
     if (edit) {
       history.push(`/recipes/${edit}`);
     } else {
-      history.push('/'); // TODO: Redirect if edit
+      history.push('/');
     }
   } catch (e) {
     alert(`An error occured: ${e.message}`); // FIXME
