@@ -1,7 +1,7 @@
 import {
   Context,
   AuthError,
-  canWriteToTimeline,
+  canWriteTimeline,
   checkIsoDate,
   getUserId
 } from '../../common';
@@ -19,7 +19,7 @@ export async function createJam(
   ctx: Context,
   info
 ) {
-  if (!(await canWriteToTimeline(ctx.db, { id: getUserId(ctx) }, timeline))) {
+  if (!(await canWriteTimeline(ctx.db, { id: getUserId(ctx) }, timeline))) {
     throw new AuthError();
   }
 
