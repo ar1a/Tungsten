@@ -51,7 +51,6 @@ export const recipe = {
 
   async deleteRecipe(parent, { id }, ctx: Context, info) {
     const userId = getUserId(ctx);
-    const recipeExists = await canWriteRecipe(ctx.db, { id: userId }, { id });
     if (!(await canWriteRecipe(ctx.db, { id: userId }, { id }))) {
       throw new Error('Recipe does not exist!');
     }
