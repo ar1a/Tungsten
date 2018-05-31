@@ -67,7 +67,9 @@ export const recipe = {
       },
       id: userId
     });
-    if (!recipeExists) return null;
+    if (!(await canWriteRecipe(ctx.db, { id: userId }, { id }))) {
+      throw new Error('Recipe does not exist!');
+    }
     return ctx.db.mutation.deleteRecipe({
       where: { id }
     });
