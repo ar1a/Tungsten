@@ -1,4 +1,4 @@
-import { Context, getUserId } from '../../common';
+import { Context, getUserId, canWriteRecipe } from '../../common';
 
 export const recipe = {
   async createRecipe(parent, args, ctx: Context, info) {
@@ -35,15 +35,7 @@ export const recipe = {
 
   async updateRecipe(parent, { data, id }, ctx: Context, info) {
     const userId = getUserId(ctx);
-    const recipeExists = await ctx.db.exists.User({
-      timeline: {
-        recipes_some: {
-          id
-        }
-      },
-      id: userId
-    });
-    if (!recipeExists) {
+    if (!(await canWriteRecipe(ctx.db, { id: userId }, { id }))) {
       throw new Error('Recipe does not exist!');
     }
     return ctx.db.mutation.updateRecipe(
@@ -59,15 +51,10 @@ export const recipe = {
 
   async deleteRecipe(parent, { id }, ctx: Context, info) {
     const userId = getUserId(ctx);
-    const recipeExists = await ctx.db.exists.User({
-      timeline: {
-        recipes_some: {
-          id
-        }
-      },
-      id: userId
-    });
-    if (!recipeExists) return null;
+    const recipeExists = await canWriteRecipe(ctx.db, { id: userId }, { id });
+    if (!(await canWriteRecipe(ctx.db, { id: userId }, { id }))) {
+      throw new Error('Recipe does not exist!');
+    }
     return ctx.db.mutation.deleteRecipe({
       where: { id }
     });
