@@ -3,21 +3,58 @@ import get from 'lodash/get';
 import omit from 'lodash/omit';
 import trim from 'lodash/trim';
 import React from 'react';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardText,
-  CardTitle,
-  Cell,
-  Checkbox,
-  CircularProgress as Progress,
-  Collapse,
-  Grid,
-  Paper
-} from 'react-md';
-import * as yup from 'yup';
+import { Button } from 'react-md/lib/Buttons';
+import { Card, CardActions, CardText, CardTitle } from 'react-md/lib/Cards';
+import { Grid, Cell } from 'react-md/lib/Grids';
+import { Checkbox } from 'react-md/lib/SelectionControls';
+import { CircularProgress as Progress } from 'react-md/lib/Progress';
+import { Collapse } from 'react-md/lib/Helpers';
+import { Paper } from 'react-md/lib/Papers';
+import schema from './RecipeSchema';
 import { renderTextField } from './utils';
+
+const onSubmit = (edit, history, submit) => async (
+  { name, Yield, ingredients: I, equipment: E },
+  { setSubmitting }
+) => {
+  let ingredients = I;
+  if (!edit) {
+    ingredients = ingredients.map(i => omit(i, 'id'));
+  }
+  ingredients = ingredients.map(i => omit(i, '__typename'));
+  let equipment = E;
+  if (!edit) {
+    equipment = equipment.map(e => omit(e, 'id'));
+  }
+  equipment = equipment.map(e => omit(e, '__typename'));
+  try {
+    await submit({
+      name,
+      Yield,
+      ingredients,
+      equipment
+    });
+    setSubmitting(false);
+    if (edit) {
+      history.push(`/recipes/${edit}`);
+    } else {
+      history.push('/'); // TODO: Redirect if edit
+    }
+  } catch (e) {
+    alert(`An error occured: ${e.message}`); // FIXME
+    setSubmitting(false);
+  }
+};
+
+const LoadingSpinner = ({ shouldHide }) => (
+  <Cell size={12} desktopSize={8} desktopOffset={2}>
+    <Collapse collapsed={shouldHide}>
+      <div style={{ height: '52px' }}>
+        <Progress id="progress" />
+      </div>
+    </Collapse>
+  </Cell>
+);
 
 export default ({
   submit,
@@ -36,80 +73,14 @@ export default ({
       equipment
     }}
     isInitialValid={!!edit}
-    validationSchema={yup.object().shape({
-      name: yup.string().required('required'),
-      Yield: yup
-        .number('not a number')
-        .required('required')
-        .positive('must be positive')
-        .integer('must be integer'),
-      ingredients: yup
-        .array()
-        .of(
-          yup.object().shape({
-            name: yup.string().required('required'),
-            quantity: yup
-              .number('not a number')
-              .typeError('quantity must be a number')
-              .required('required')
-              .positive('must be positive')
-          })
-        )
-        .required('Must have ingredients'),
-      equipment: yup
-        .array()
-        .of(
-          yup.object().shape({
-            name: yup.string().required('required'),
-            washable: yup.bool().required('required')
-          })
-        )
-        .required('Must have equipment')
-    })}
-    onSubmit={async (
-      { name, Yield, ingredients: I, equipment: E },
-      { setSubmitting }
-    ) => {
-      let ingredients = I;
-      if (!edit) {
-        ingredients = ingredients.map(i => omit(i, 'id'));
-      }
-      ingredients = ingredients.map(i => omit(i, '__typename'));
-      let equipment = E;
-      if (!edit) {
-        equipment = equipment.map(e => omit(e, 'id'));
-      }
-      equipment = equipment.map(e => omit(e, '__typename'));
-      try {
-        await submit({
-          name,
-          Yield,
-          ingredients,
-          equipment
-        });
-        setSubmitting(false);
-        if (edit) {
-          history.push(`/recipes/${edit}`);
-        } else {
-          history.push('/'); // TODO: Redirect if edit
-        }
-      } catch (e) {
-        alert(`An error occured: ${e.message}`); // FIXME
-        setSubmitting(false);
-      }
-    }}
+    validationSchema={schema}
+    onSubmit={onSubmit(edit, history, submit)}
   >
     {({ handleChange, handleSubmit, isSubmitting, values, ...bag }) => (
       <form onSubmit={handleSubmit} className="md-text-container">
         <Grid>
           <br />
-          <Cell size={12} desktopSize={8} desktopOffset={2}>
-            <Collapse collapsed={!isSubmitting}>
-              <div style={{ height: '52px' }}>
-                <Progress id="progress" />
-              </div>
-            </Collapse>
-          </Cell>
+          <LoadingSpinner shouldHide={!isSubmitting} />
           <Cell size={12}>
             <Field
               customSize="title"
@@ -133,6 +104,7 @@ export default ({
             />
           </Cell>
 
+          {/* FIXME DRY -- refactor this out */}
           <Cell size={12}>
             <Card>
               <CardTitle title="Ingredients" />

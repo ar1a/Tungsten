@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Cell } from 'react-md';
+import { Grid, Cell } from 'react-md/lib/Grids';
 
 export default () => (
   <Grid>

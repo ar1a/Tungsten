@@ -1,6 +1,9 @@
 import React from 'react';
 import { Connect, query, mutation } from 'urql';
-import { List, Button, ListItem, Card, CardText, Grid, Cell } from 'react-md';
+import { List, ListItem } from 'react-md/lib/Lists';
+import { Button } from 'react-md/lib/Buttons';
+import { Card, CardText } from 'react-md/lib/Cards';
+import { Grid, Cell } from 'react-md/lib/Grids';
 
 const RECIPE_QUERY = `
 query ($id:ID!){
