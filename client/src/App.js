@@ -106,11 +106,11 @@ class App extends Component {
                   path="/new-recipe"
                   component={AsyncCreateRecipe}
                 />
-                <PrivateRoute path="/recipes/:id" component={AsyncRecipe} />
                 <PrivateRoute
                   path="/recipes/:id/edit"
                   component={AsyncEditRecipe}
                 />
+                <PrivateRoute path="/recipes/:id" component={AsyncRecipe} />
                 <PrivateRoute path="/recipes" component={AsyncRecipeList} />
                 <Route path="/logout" component={AsyncLogout} />
               </Switch>

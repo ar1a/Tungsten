@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import { Redirect } from 'react-router-dom';
 import { Grid, Cell } from 'react-md/lib/Grids';
-import { Snackbar } from 'react-md/lib/Snackbars';
+import Snackbar from 'react-md/lib/Snackbars';
 import { CircularProgress as Progress } from 'react-md/lib/Progress';
 import { Collapse } from 'react-md/lib/Helpers';
 import { Button } from 'react-md/lib/Buttons';
