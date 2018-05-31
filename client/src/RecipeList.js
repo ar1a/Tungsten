@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, List, ListItem, Cell, Grid } from 'react-md';
+import { Button } from 'react-md/lib/Buttons';
+import { List, ListItem } from 'react-md/lib/Lists';
+import { Cell, Grid } from 'react-md/lib/Grids';
 import get from 'lodash/get';
 import { Connect, query } from 'urql';
 import { CSSTransitionGroup } from 'react-transition-group';

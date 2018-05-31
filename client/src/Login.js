@@ -1,14 +1,11 @@
 import React from 'react';
 import { Form, Field, Formik } from 'formik';
 import { Redirect } from 'react-router-dom';
-import {
-  Grid,
-  Cell,
-  Snackbar,
-  CircularProgress as Progress,
-  Collapse,
-  Button
-} from 'react-md';
+import { Grid, Cell } from 'react-md/lib/Grids';
+import { Snackbar } from 'react-md/lib/Snackbars';
+import { CircularProgress as Progress } from 'react-md/lib/Progress';
+import { Collapse } from 'react-md/lib/Helpers';
+import { Button } from 'react-md/lib/Buttons';
 import * as Yup from 'yup';
 import { mutation, Connect } from 'urql';
 import clone from 'lodash/clone';
