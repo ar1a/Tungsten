@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as RouterLink, Route } from 'react-router-dom';
-import { FontIcon, ListItem } from 'react-md';
+import { ListItem } from 'react-md/lib/Lists';
+import { FontIcon } from 'react-md/lib/FontIcons';
 
 const NavLink = ({ label, to, exact, icon, shouldHide, requireAuth }) => (
   <Route path={to} exact={exact}>

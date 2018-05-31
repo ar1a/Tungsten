@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField } from 'react-md';
+import { TextField } from 'react-md/lib/TextFields';
 
 export const renderTextField = ({
   field,
