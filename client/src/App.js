@@ -3,8 +3,6 @@ import { NavigationDrawer } from 'react-md';
 import { Switch, Route, matchPath } from 'react-router-dom';
 import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
-import NavLink from './NavLink';
-import PrivateRoute from './PrivateRoute';
 import './App.css';
 import Loadable from './Loadable';
 
@@ -34,6 +32,14 @@ const AsyncRecipe = Loadable({
 
 const AsyncEditRecipe = Loadable({
   loader: () => import('./EditRecipe')
+});
+
+const NavLink = Loadable({
+  loader: () => import('./NavLink')
+});
+
+const PrivateRoute = Loadable({
+  loader: () => import('./PrivateRoute')
 });
 
 const navItems = [
