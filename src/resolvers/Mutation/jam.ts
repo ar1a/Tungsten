@@ -19,7 +19,7 @@ export async function createJam(
   ctx: Context,
   info
 ) {
-  if (!canWriteToTimeline(ctx.db, { id: getUserId(ctx) }, timeline)) {
+  if (!(await canWriteToTimeline(ctx.db, { id: getUserId(ctx) }, timeline))) {
     throw new AuthError();
   }
 
