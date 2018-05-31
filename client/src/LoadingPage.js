@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircularProgress } from 'react-md';
+import CircularProgress from 'react-md/lib/Progress/CircularProgress';
 
 export default ({ error, pastDelay, retry }) => {
   if (error) {

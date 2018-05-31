@@ -3,19 +3,13 @@ import get from 'lodash/get';
 import omit from 'lodash/omit';
 import trim from 'lodash/trim';
 import React from 'react';
-import {
-  Button,
-  Card,
-  CardActions,
-  CardText,
-  CardTitle,
-  Cell,
-  Checkbox,
-  CircularProgress as Progress,
-  Collapse,
-  Grid,
-  Paper
-} from 'react-md';
+import { Button } from 'react-md/lib/Buttons';
+import { Card, CardActions, CardText, CardTitle } from 'react-md/lib/Cards';
+import { Grid, Cell } from 'react-md/lib/Grids';
+import { Checkbox } from 'react-md/lib/SelectionControls';
+import { CircularProgress as Progress } from 'react-md/lib/Progress';
+import { Collapse } from 'react-md/lib/Helpers';
+import { Paper } from 'react-md/lib/Papers';
 import schema from './RecipeSchema';
 import { renderTextField } from './utils';
 
