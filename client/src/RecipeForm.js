@@ -308,7 +308,7 @@ export default ({
               primary
               raised
             >
-              Create
+              {edit ? 'Update' : 'Create'}
             </Button>
           </Cell>
         </Grid>
