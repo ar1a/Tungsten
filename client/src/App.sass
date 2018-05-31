@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto")
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons")
+
+.text-fields__inline-btn.md-btn
+  height: 24px
+  padding: 0
+  width: 24px
+
+.list-transition-enter
+  transform: translateX(100px)
+  opacity: 0.01
+
+.list-transition-enter-active
+  transition: all 250ms cubic-bezier(0, 0, 0.2, 1)
+  transform: none
+  opacity: 1
+
+.list-transition-leave
+  transform: none
+  opacity: 1
+
+.list-transition-leave-active
+  transition: all 200ms cubic-bezier(0.4, 0, 1, 1)
+  transform: translateX(100px)
+  opacity: 0.01
+
+.md-list-no-background
+  background: inherit
