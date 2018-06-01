@@ -35,6 +35,11 @@ type Mutation {
   ): Recipe
   updateRecipe(id: ID!, data: RecipeUpdateInput!): Recipe
   deleteRecipe(id: ID!): Recipe
+  createJam(
+    timeline: TimelineWhereUniqueInput!
+    date: String!
+    recipe: RecipeWhereUniqueInput!
+  ): Event
 }
 
 type AuthPayload {
