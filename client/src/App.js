@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { NavigationDrawer } from 'react-md/lib/NavigationDrawers';
 import { Switch, Route, matchPath } from 'react-router-dom';
-import 'react-md/dist/react-md.deep_purple-deep_orange.min.css';
 
 import './App.css';
 import Loadable from './Loadable';
