@@ -38,7 +38,7 @@ const onSubmit = (edit, history, submit) => async (
     if (edit) {
       history.push(`/recipes/${edit}`);
     } else {
-      history.push('/');
+      history.push('/recipes');
     }
   } catch (e) {
     alert(`An error occured: ${e.message}`); // FIXME
